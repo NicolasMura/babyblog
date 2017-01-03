@@ -1,6 +1,12 @@
 Django==1.8.13
-django-extensions
+djangorestframework==3.3.2
+django-extra-fields
+django-cors-headers==1.1.0
+django-oauth-plus
+oauth2
+django-oauth-toolkit
+django-extensions>=1.5
 django-suit==0.2.22
-django-bootstrap3
+django-bootstrap3>=7.0.1
 psycopg2
 pillow

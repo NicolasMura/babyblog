@@ -8,6 +8,10 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('babyblog.urls', namespace='babyblog')),
     url(r'^user/', include('zn_users.urls', namespace='zn_users')),
+    # url(
+    #     r'^api/',
+    #     include('babyblog.api_v1_0.urls', namespace='api_v1_0')
+    # ),
 )
 
 urlpatterns += (

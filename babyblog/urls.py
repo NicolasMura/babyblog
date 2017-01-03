@@ -1,13 +1,30 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
-
-from .views import *
+from django.conf.urls import patterns, url, include
+from rest_framework.urlpatterns import format_suffix_patterns
+import views
 
 urlpatterns = patterns(
     '',
+    # REST urls
+    url(
+        r'^api$',
+        views.api_root,
+    ),
+    url(
+        r'^api/post-list$',
+        views.PostList.as_view(),
+        name='post-list',
+    ),
+    url(
+        r'^api/profile-list$',
+        views.ProfileList.as_view(),
+        name='profile-list',
+    ),
+
+    # App urls
     url(
         r'^$',
-        HomeView.as_view(),
+        views.HomeView.as_view(),
         name='home',
     ),
     # url(
@@ -21,22 +38,33 @@ urlpatterns = patterns(
     # ),
     url(
         r'^gallery$',
-        HomeView2.as_view(),
+        views.HomeView2.as_view(),
         name='home2',
     ),
     url(
         r'^post$',
-        SingleBlog.as_view(),
+        views.SingleBlog.as_view(),
         name='post',
     ),
     url(
         r'^post-slider$',
-        SingleBlogSlider.as_view(),
+        views.SingleBlogSlider.as_view(),
         name='post-slider',
     ),
     url(
         r'^post-video$',
-        SingleBlogVideo.as_view(),
+        views.SingleBlogVideo.as_view(),
         name='post-video',
     ),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns)
+
+# Login and logout views for the browsable API
+urlpatterns += [
+    url(
+        r'^api-auth/',
+        include('rest_framework.urls', namespace='rest_framework')
+        # Tip : namespace is optional since Django 1.9+
+    ),
+]

@@ -44,6 +44,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'zn_users',
     'babyblog',
+    'rest_framework',
+    'corsheaders',
+    'oauth2_provider',
 )
 
 MIDDLEWARE_CLASSES = (
