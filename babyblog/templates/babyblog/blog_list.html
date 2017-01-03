@@ -1,0 +1,79 @@
+{% extends 'babyblog/base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+    {% include 'babyblog/widgets/page_title.html' with title='Home' subtitle='Subtitle' %}
+{% endblock page_title %}
+
+
+{% block main_content %}
+<section class="blog">
+
+    <div class="row">
+
+        <div class="col-sm-8">
+            {% for post in object_list %}
+                <div class="box box-flag" data-sr='enter from the top and scale up 30% over 0.8s please'>
+
+                    <div class="flag flag--gutterless">
+
+                    {% if post.image %}
+                    <div class="flag__img">
+                        <div class="img-box">
+                            <div class="box-hover">
+                                <a href="{% url 'babyblog:post' %}" class="btn btn-medium ">View Details <span class="icon-arrow-right2"></span></a>
+                            </div>
+                            <img src="{{ post.image.url }}" alt="">
+                        </div>
+
+                    </div>
+                    {% endif %}
+                    <div class="flag__body text-center">
+
+                        <div class="box-body">
+                            
+                            <h2 class="heading--alpha"><a href="#">{{ post.title }}</a> </h2>
+                            {% block header_list %}
+                                {# {% include 'babyblog/widgets/header_list.html' %} #}
+                            {% endblock header_list %} 
+
+                            <p>{{ post.content }}</p>
+
+                            <!-- <ul class="social-list">
+                                <li>
+                                    <a href="#"><span class="icon-facebook"></span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="icon-twitter"></span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="icon-pinterest"></span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="icon-googleplus"></span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="fa fa-linkedin"></span></a>
+                                </li>
+                            </ul> -->
+
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+            {% include 'babyblog/widgets/load_more.html' %}
+        </div>
+
+        <div class="col-sm-4 sidebar">
+            {% include 'babyblog/widgets/box_text.html' %}
+            {% include 'babyblog/widgets/box_image.html' %}
+        </div>
+
+    </div>
+
+</section>
+{% endblock main_content %}

@@ -1,0 +1,76 @@
+{% load static %}
+<article>
+
+    <div class="box p-10 avatar-box">
+        <a href="#"><img src="{% static 'babyblog/images/charlouze.jpg' %}" alt=""></a>
+    </div>
+
+    <div class="box p-20 date-box text-center">
+        <a href="#">15</a>
+        <span class="block">OCT</span>
+        <span class="block">2014</span>
+    </div>
+    <!-- <div class="box p-20">
+        <ul class="social-list">
+            <li>
+                <a href="#"><span class="icon-facebook"></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="icon-twitter"></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="icon-pinterest"></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="icon-googleplus"></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa fa-linkedin"></span></a>
+            </li>
+        </ul>
+    </div> -->
+    
+</article>
+
+<div class="box p-50" >
+        
+    <div class="main-img">
+        <img src="http://placehold.it/670x410" alt="">
+        <!-- <img src="{% static 'babyblog/images/blog-img1.jpg' %}" alt=""> -->
+    </div>
+
+    <div class="text-center box-body"">
+        
+        <!-- <h2 class="heading--alpha">Famous Photographer From London Photo Seasion Photos 2014/2105 </h2> -->
+        {% block header_list %}
+            {# {% include 'babyblog/widgets/header_list.html' %} #}
+        {% endblock header_list %} 
+
+        <p class="first-letter text-left" style="margin-bottom: 0px;">
+            <span>L</span>ocavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed       normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. 
+            Locavore pop-up church-key sriracha plaid,
+            <br>
+            <br>
+            Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch.
+        </p>
+
+    </div>
+
+
+    <!-- <div class="box-body-nav">
+
+        <ul>
+            <li>
+                <a href="#">Fashion</a>
+            </li>
+            <li>
+                <a href="#">Moda 2014</a>
+            </li>
+            <li>
+                <a href="#">TV Show</a>
+            </li>
+        </ul>
+        
+    </div> -->
+
+</div>

@@ -1,0 +1,26 @@
+{% extends 'babyblog/base.html' %}
+
+
+{% block main_content %}
+<section class="single-blog">
+
+    <div class="row">
+
+        <div class="col-sm-8">
+            {% include 'babyblog/widgets/single_blog_item_video.html' %}
+            {% include 'babyblog/widgets/single_blog_comments.html' %}
+        </div>
+
+        <div class="col-sm-4 sidebar">
+            {% include 'babyblog/widgets/box_text.html' %}
+            {% include 'babyblog/widgets/box_image.html' %}
+        </div>
+
+    </div>
+
+</section>
+{% endblock main_content %}
+
+
+{% block load_more %}
+{% endblock load_more %}

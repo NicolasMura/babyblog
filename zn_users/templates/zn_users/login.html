@@ -1,0 +1,32 @@
+{% extends 'social/base.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block title %}Connexion{% endblock %}
+
+
+{% block h1 %}{% trans "Connexion" %}{% endblock h1 %}
+
+
+{% block content %}
+  {% if not user.is_authenticated %}
+  <div class="row">
+    <div class="col-xs-12">
+      <form method="post" action="{% url 'zn_users:generic-login-view' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="input-group">
+          <button type="submit" class="btn btn-primary">{% trans "Se connecter" %}</button>
+          <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-12">
+      <p>{% trans "Pas encore de compte ?" %} <a href="{% url 'zn_users:user-profile-signup-view' %}">{% trans "Inscrivez-vous</a>, c'est gratuit :)" %}</p>
+    </div>
+  </div>
+  {% else %}
+    <p>{% trans "Vous êtes déjà connecté en tant que" %} <a href="{% url 'social:wall-profile-view' user.username %}">{{ user.username }}</a>.</p>
+    <a href="{% url 'zn_users:generic-logout' %}">{% trans "Déconnexion" %}</a>
+  {% endif %}
+{% endblock content %}

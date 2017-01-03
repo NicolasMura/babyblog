@@ -1,0 +1,33 @@
+{% extends 'babyblog/base.html' %}
+{% load static %}
+
+
+{% block main_content %}
+<section class="single-blog">
+
+    <div class="row">
+
+        <div class="col-sm-8">
+            {% include 'babyblog/widgets/single_blog_item_slider.html' %}
+            {% include 'babyblog/widgets/single_blog_comments.html' %}
+        </div>
+
+        <div class="col-sm-4 sidebar">
+            {% include 'babyblog/widgets/box_text.html' %}
+            {% include 'babyblog/widgets/box_image.html' %}
+        </div>
+
+    </div>
+
+</section>
+{% endblock main_content %}
+
+
+{% block load_more %}
+{% endblock load_more %}
+
+
+{% block javascript %}
+    <script src="{% static 'babyblog/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'babyblog/js/owlslider.js' %}"></script>
+{% endblock javascript %}

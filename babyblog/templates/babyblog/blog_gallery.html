@@ -1,0 +1,15 @@
+{% extends 'babyblog/base.html' %}
+
+
+{% block page_title %}
+    {% include 'babyblog/widgets/page_title.html' with title='Gallery' subtitle='Subtitle' %}
+{% endblock page_title %}
+
+
+{% block main_content %}
+<section>
+
+{% include 'babyblog/widgets/gallery.html' %}
+
+</section>
+{% endblock main_content %}
