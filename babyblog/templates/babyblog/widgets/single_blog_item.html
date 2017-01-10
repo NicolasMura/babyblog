@@ -2,7 +2,8 @@
 <article>
 
     <div class="box p-10 avatar-box">
-        <a href="#"><img src="{% static 'babyblog/images/charlouze.jpg' %}" alt=""></a>
+        <!-- <a href="#"><img src="{# {% static 'babyblog/images/charlouze.jpg' %} #}" alt=""></a> -->
+        <a href="#"><img src="{{ post.user.profile.avatar.url }}" alt=""></a>
     </div>
 
     <div class="box p-20 date-box text-center">
@@ -35,7 +36,8 @@
 <div class="box p-50" >
         
     <div class="main-img">
-        <img src="http://placehold.it/670x410" alt="">
+        <img src="{{ post.image.url }}" alt="">
+        <!-- <img src="http://placehold.it/670x410" alt=""> -->
         <!-- <img src="{% static 'babyblog/images/blog-img1.jpg' %}" alt=""> -->
     </div>
 

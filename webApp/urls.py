@@ -7,12 +7,9 @@ urlpatterns = patterns(
     '',
     url(r'^', include('babyblog.urls', namespace='babyblog')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url(r'^user/', include('zn_users.urls', namespace='zn_users')),
+    url(r'^user/', include('zn_auth.urls', namespace='zn_auth')),
     url(r'^admin/', include(admin.site.urls)),
-    # url(
-    #     r'^api/',
-    #     include('babyblog.api_v1_0.urls', namespace='api_v1_0')
-    # ),
+    url(r'^api/', include('api.urls', namespace='api')),
 )
 
 urlpatterns += (

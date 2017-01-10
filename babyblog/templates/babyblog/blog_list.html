@@ -6,7 +6,6 @@
     {% include 'babyblog/widgets/page_title.html' with title='Home' subtitle='Subtitle' %}
 {% endblock page_title %}
 
-
 {% block main_content %}
 <section class="blog">
 
@@ -22,7 +21,7 @@
                     <div class="flag__img">
                         <div class="img-box">
                             <div class="box-hover">
-                                <a href="{% url 'babyblog:post' %}" class="btn btn-medium ">View Details <span class="icon-arrow-right2"></span></a>
+                                <a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium ">View Details <span class="icon-arrow-right2"></span></a>
                             </div>
                             <img src="{{ post.image.url }}" alt="">
                         </div>

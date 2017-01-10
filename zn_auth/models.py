@@ -3,11 +3,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-# from django.contrib.sites.models import Site  # utile ?
-# from django.utils.encoding import python_2_unicode_compatible  # utile ?
-
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 VALID_IMG_EXTENSIONS = [
         ".jpg", ".JPG",
@@ -47,11 +45,13 @@ def validate_image(
                 "autorisée ({} Mo)".format(MEGABYTE_LIMIT)))
 
 
-class Profile(AbstractUser):
+class Profile(models.Model):
     class Meta:
         verbose_name = _('Utilisateur')
         verbose_name_plural = _('Utilisateurs')
+        db_table = 'auth_profile'
 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(
         verbose_name=_("Votre avatar"),
         blank=True,
@@ -62,4 +62,16 @@ class Profile(AbstractUser):
     )
 
     def __unicode__(self):
-        return self.username
+        return self.user.username
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+post_save.connect(create_user_profile, sender=User)
+post_save.connect(save_user_profile, sender=User)

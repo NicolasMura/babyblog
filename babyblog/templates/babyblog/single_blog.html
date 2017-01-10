@@ -7,7 +7,7 @@
     <div class="row">
 
         <div class="col-sm-8">
-            {% include 'babyblog/widgets/single_blog_item.html' %}
+            {% include 'babyblog/widgets/single_blog_item.html' with post=object %}
             {% include 'babyblog/widgets/single_blog_comments.html' %}
         </div>
 

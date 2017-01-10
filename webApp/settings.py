@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import socket
+from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__)) + '/'
 
@@ -33,8 +34,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'bootstrap3',
     'django_extensions',
-    'zn_users',
     'babyblog',
+    'zn_auth',
     'rest_framework',
     'corsheaders',
     'oauth2_provider',
@@ -137,8 +138,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-AUTH_USER_MODEL = 'zn_users.Profile'
-LOGIN_URL = '/login/'
+LOGIN_URL = reverse_lazy('zn_auth:login')
+# LOGIN_REDIRECT_URL = reverse_lazy('babyblog:home')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/m/'
 
@@ -157,6 +158,7 @@ if HOST != 'vps121400.ovh.net':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    CORS_ORIGIN_ALLOW_ALL = True
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     # Prod settings
