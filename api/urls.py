@@ -16,19 +16,24 @@ urlpatterns = patterns(
         name='post-list',
     ),
     url(
+        r'^posts/create$',
+        views.PostCreate.as_view(),
+        name='post-create',
+    ),
+    url(
         r'^posts/(?P<pk>[0-9]+)/$',
         views.PostDetail.as_view(),
         name='post-detail',
     ),
     url(
-        r'^profiles$',
-        views.ProfileList.as_view(),
-        name='profile-list',
+        r'^users$',
+        views.UserList.as_view(),
+        name='user-list',
     ),
     url(
-        r'^profiles/(?P<pk>[0-9]+)/$',
-        views.ProfileList.as_view(),
-        name='profile-detail',
+        r'^users/(?P<pk>[0-9]+)/$',
+        views.UserDetail.as_view(),
+        name='user-detail',
     ),
 
 )

@@ -52,7 +52,7 @@ class Post(models.Model):
     class Meta:
         ordering = ('date', )
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     content = models.TextField(max_length=255)
     parent = models.ForeignKey('Post', null=True, blank=True)

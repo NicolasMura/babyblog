@@ -53,8 +53,9 @@ OAUTH2_PROVIDER = {
 REST_FRAMEWORK = {
     # django-oauth-toolkit permissions
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
-        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
