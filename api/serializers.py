@@ -59,7 +59,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('content', 'image')
 
 
-class PostListSerializer(serializers.HyperlinkedModelSerializer):
+class PostListSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     user = UserSerializer()
     reply_set = RecursiveSerializer(many=True, read_only=True)
@@ -70,7 +70,7 @@ class PostListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user', 'date', 'content',
-                  'likes', 'comments', 'image', 'reply_set')
+                  'parent', 'likes', 'comments', 'image', 'reply_set')
 
     def create(self, validated_data):
         print('validated_data : ', validated_data)
@@ -83,6 +83,13 @@ class PostListSerializer(serializers.HyperlinkedModelSerializer):
             image = None
         print('image : ', image)
 
+        if 'parent' in validated_data.keys():
+            relatedPostId = validated_data['parent']
+            print(relatedPostId)
+        else:
+            relatedPostId = None
+        print('Post parent : ', relatedPostId)
+
         username = validated_data['user']['username']
         print('username : ', username)
 
@@ -92,6 +99,7 @@ class PostListSerializer(serializers.HyperlinkedModelSerializer):
         post = Post.objects.create(
             user=user,
             content=content,
+            parent=relatedPostId,
             image=image,
         )
 

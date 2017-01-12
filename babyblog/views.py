@@ -14,9 +14,7 @@ from models import Post
 
 
 def home(request):
-    if request.user.is_authenticated():
-        return redirect(reverse_lazy('babyblog:home'))
-    else:
+    if not request.user.is_authenticated():
         return redirect(reverse_lazy('zn_auth:login'))
 
 

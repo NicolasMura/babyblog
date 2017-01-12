@@ -140,7 +140,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 LOGIN_URL = reverse_lazy('zn_auth:login')
-# LOGIN_REDIRECT_URL = reverse_lazy('babyblog:home')
+LOGIN_REDIRECT_URL = reverse_lazy('babyblog:home')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/m/'
 
