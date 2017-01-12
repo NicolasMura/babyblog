@@ -3,13 +3,14 @@ from __future__ import unicode_literals
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+# from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import View
 
 from models import Post
-from forms import PostForm
+# from forms import PostForm
 
 
 def home(request):
@@ -39,7 +40,7 @@ class HomeView(ListView, View):
     TO WRITE
     """
     model = Post
-    queryset = Post.objects.filter(parent=None).order_by('-date')
+    queryset = Post.objects.order_by('-date')
     template_name = "babyblog/blog_list.html"
 
     # @method_decorator(login_required)

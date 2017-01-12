@@ -12,6 +12,7 @@ from serializers import (
     UserSerializer,
 )
 from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import status
@@ -22,7 +23,7 @@ from rest_framework import status
 # Imports for endpoint for the root of our ListAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-# from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route
 from rest_framework.reverse import reverse
 
 # Imports for oauth2_provider
@@ -50,8 +51,20 @@ def api_root(request, format=None):
     })
 
 
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(parent=None).order_by('-date')
+
+    serializer_class = PostListSerializer
+
+    @list_route()
+    def roots(self, request):
+        queryset = Post.objects.filter(parent=None)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class PostList(generics.ListCreateAPIView):
-    queryset = Post.objects.filter(parent=None).order_by(('-date'))
+    queryset = Post.objects.order_by(('-date'))
     serializer_class = PostListSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # authentication_classes = [OAuth2Authentication]
@@ -64,24 +77,6 @@ class PostList(generics.ListCreateAPIView):
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
 
-    # @list_route()
-    # def roots(self, request):
-    #     queryset = Post.objects.filter(parent=None)
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
-
-
-# class PostList(generics.GenericAPIView, mixins.CreateModelMixin,
-#                mixins.RetrieveModelMixin):
-#     queryset = Post.objects.filter(parent=None).order_by(('-date'))
-#     serializer_class = PostListSerializer
-
-#     def post(self, request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
-
-#     def get(self, request, *args, **kwargs):
-#         return self.retrieve(request, *args, **kwargs)
-
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
@@ -92,39 +87,9 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     # )
 
 
-# class PostCreate(APIView):
-#     # def get(self, request, format=None):
-#     #     posts = Post.objects.filter(parent=None).order_by(('-date'))
-#     #     serializer = PostSerializer(posts, many=True)
-#     #     return Response(serializer.data)
-
-#     # # Overriding perform_create() method to associate Posts with Profiles
-#     # def perform_create(self, serializer):
-#     #     serializer.save(user=self.request.user)
-
-#     def post(self, request):
-#         serializer = PostCreateSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
-
 class PostCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostCreateSerializer
-
-    # def get(self, request, format=None):
-    #     posts = Post.objects.filter(parent=None).order_by(('-date'))
-    #     serializer = PostSerializer(posts, many=True)
-    #     return Response(serializer.data)
-
-    # def post(self, request):
-    #     serializer = PostCreateSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserList(generics.ListAPIView):

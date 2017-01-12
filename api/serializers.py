@@ -46,19 +46,23 @@ class UserSerializer(serializers.ModelSerializer):
 #         return object.profile.avatar.url
 
 
-class RecursiveField(serializers.Serializer):
+class RecursiveSerializer(serializers.Serializer):
     def to_representation(self, value):
-        serializer = self.parent.parent.__class__(value, context=self.context)
+        serializer = self.parent.parent.__class__(
+            value, context=self.context)
         return serializer.data
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('content', 'image')
 
 
 class PostListSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     user = UserSerializer()
-    # user = serializers.PrimaryKeyRelatedField(read_only=True)
-    parent = serializers.StringRelatedField(many=False)
-    # reply_set = RecursiveField(many=True)  # marche pas
-    # related_comments = serializers.SerializerMethodField()
+    reply_set = RecursiveSerializer(many=True, read_only=True)
     image = Base64ImageField(
         max_length=None, use_url=True,
         allow_empty_file=True, required=False, )
@@ -66,15 +70,17 @@ class PostListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user', 'date', 'content',
-                  'parent', 'likes', 'comments', 'image')
-        # depth = 1
+                  'likes', 'comments', 'image', 'reply_set')
 
     def create(self, validated_data):
         print('validated_data : ', validated_data)
 
         content = validated_data['content']
         print('content : ', content)
-        image = validated_data['image']
+        if 'image' in validated_data.keys():
+            image = validated_data['image']
+        else:
+            image = None
         print('image : ', image)
 
         username = validated_data['user']['username']
@@ -91,51 +97,10 @@ class PostListSerializer(serializers.HyperlinkedModelSerializer):
 
         return post
 
-    # # TEST https://medium.com/django-rest-framework/dealing-with-unique-
-    # # constraints-in-nested-serializers-dade33b831d9#.x1x1jxn0y
-    # def create(self, validated_data):
-    #     owner_data = validated_data.pop('user')
-    #     username = owner_data.pop('username')
-    #     user = get_user_model().objects.get_or_create(username=username)[0]
-    #     post = Post.objects.create(user=user, **validated_data)
-    #     return post
-
-    # def update(self, instance, validated_data):
-    #     owner_data = validated_data.pop('user')
-    #     username = owner_data.pop('username')
-    #     user = get_user_model().objects.get_or_create(username=username)[0]
-    #     instance.user = user
-    #     instance.name = validated_data['name']
-    #     return instance
-
-    # Marche pas
-    # def get_related_comments(self, obj):
-    #     return Post.objects.filter(parent=obj)
-
-    # TEST http://stackoverflow.com/questions/33764314/how-can-i-add-
-    # a-car-to-a-user-with-django-rest-framework
-    # def create(self, validated_data):
-    #     """ Add post to an user
-    #     """
-    #     print(validated_data)
-    #     content = validated_data.pop('content')
-    #     username = validated_data.pop('username')
-    #     parent = None
-    #     # image = validated_data.pop('image')
-    #     user = User.objects.get(username=username)
-    #     post = Post.objects.create(
-    #         user=user,
-    #         parent=parent,
-    #         content=content,
-    #         # image=image,
-    #     )
-
-    #     return post
-
 
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False)
-    parent = serializers.StringRelatedField(many=False)
+    # parent = serializers.StringRelatedField(many=False)
     # reply_set = RecursiveField(many=True)  # marche pas
     # related_comments = serializers.SerializerMethodField()
     # image = Base64ImageField(
@@ -145,16 +110,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('user', 'date', 'content',
-                  'parent', 'likes', 'comments', 'image')
-
-    # def get_related_comments(self, obj):
-    #     return Post.objects.filter(parent=obj)
-
-
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ('content', 'image')
+                  'likes', 'comments', 'image')
 
     # def get_related_comments(self, obj):
     #     return Post.objects.filter(parent=obj)

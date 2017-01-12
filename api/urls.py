@@ -12,12 +12,12 @@ urlpatterns = patterns(
     ),
     url(
         r'^posts$',
-        views.PostList.as_view(),
+        views.PostViewSet.as_view({'get': 'list'}),
         name='post-list',
     ),
     url(
         r'^posts/create$',
-        views.PostCreate.as_view(),
+        views.PostList.as_view(),
         name='post-create',
     ),
     url(

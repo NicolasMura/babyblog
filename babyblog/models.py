@@ -52,16 +52,23 @@ class Post(models.Model):
     class Meta:
         ordering = ('date', )
 
-    user = models.ForeignKey(User, related_name='posts')
+    user = models.ForeignKey(
+        User,
+        related_name='posts',
+        # max_length=COMMENT_MAX_LENGTH,
+        default="",
+        blank=False,
+    )
     date = models.DateTimeField(auto_now_add=True)
-    content = models.TextField(max_length=255)
-    parent = models.ForeignKey('Post', null=True, blank=True)
+    content = models.TextField(max_length=255, )
+    parent = models.ForeignKey(
+        'self', related_name='reply_set', null=True, blank=True)
     likes = models.IntegerField(default=0)
     comments = models.IntegerField(default=0)
     image = models.ImageField(
         verbose_name=_("Votre image"),
         blank=True,
-        null=False,
+        null=True,
         upload_to='upload/images',
         validators=[validate_image],
     )
@@ -71,157 +78,4 @@ class Post(models.Model):
             'user': self.user.username, 'content': self.content[:50]}
 
     def get_comments(self):
-        return Post.objects.filter(parent=self).order_by('date')
-
-
-# # @python_2_unicode_compatible
-# class PostCommentAbstract(models.Model):
-#     """
-#     A user post/comment about some object.
-#     """
-
-#     class Meta:
-#         abstract = True
-#         ordering = ('submit_date', )
-
-#     # author = models.ForeignKey(
-#     #     settings.AUTH_USER_MODEL,
-#     #     verbose_name=_('Auteur'),
-#     #     blank=False,
-#     #     null=False,
-#     #     # related_name="%(class)s_comments",
-#     #     related_name="%(class)s_author",
-#     #     on_delete=models.CASCADE,
-#     # )
-#     content = models.TextField(
-#         verbose_name=_('Contenu'),
-#         max_length=COMMENT_MAX_LENGTH,
-#         default="",
-#         blank=False,
-#     )
-#     # Metadata about the post/comment
-#     submit_date = models.DateTimeField(
-#         verbose_name=_('Date de publication'),
-#         auto_now_add=True,
-#         auto_now=False,
-#     )
-#     is_public = models.BooleanField(
-#         verbose_name=_('publique ?'),
-#         default=True,
-#         help_text=_(
-#             'Uncheck this box to make the comment effectively '
-#             'disappear from the site.'
-#         ),
-#     )
-#     is_removed = models.BooleanField(
-#         verbose_name=_('Désactivé ?'),
-#         default=False,
-#         help_text=_(
-#             'Check this box if the comment is inappropriate. '
-#             'A "This comment has been removed" message will '
-#             'be displayed instead.'
-#         ),
-#     )
-
-#     # def get_absolute_url(self, anchor_pattern="#c%(id)s"):
-#     #     return self.get_content_object_url() + (
-#     #         anchor_pattern % self.__dict__)
-
-#     def get_as_text(self):
-#         """
-#         Return this comment as plain text. Useful for emails.
-#         """
-#         d = {
-#             'profile': self.profile,
-#             'date': self.submit_date,
-#             'comment': self.comment,
-#             'domain': self.site.domain,
-#         }
-#         return _(
-#             'Posted by %(profile)s '
-#             'at %(date)s\n\n%(comment)s\n\nhttp://%(domain)s'
-#         ) % d
-
-
-# class Post(PostCommentAbstract):
-#     class Meta:
-#         verbose_name = _('Post')
-#         verbose_name_plural = _('Posts')
-#         ordering = ('submit_date', )
-
-#     # Note : author is not in PostCommentAbstract
-#     # because we can't use abstract
-#     # model in serializers...
-#     author = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         verbose_name=_('Auteur'),
-#         blank=False,
-#         null=False,
-#         related_name="posts",
-#         on_delete=models.CASCADE,
-#     )
-#     title = models.CharField(
-#         verbose_name=_('Titre'),
-#         max_length=POST_TITLE_MAX_LENGTH,
-#         default='',
-#         blank=False,
-#     )
-#     slug = models.SlugField(
-#         unique=True,
-#     )
-#     image = models.ImageField(
-#         verbose_name=_("Votre image"),
-#         blank=True,
-#         null=False,
-#         upload_to='upload/images',
-#         validators=[validate_image],
-#     )
-
-#     def __unicode__(self):
-#         return _("Post de %(author)s : %(content)s...") % {
-#             'author': self.author, 'content': self.content[:50]}
-
-#     # @models.permalink
-#     # def get_absolute_url(self):
-#     #     return (
-#     #         'blog_post_detail',
-#     #         (),
-#     #         {
-#     #             'slug': self.slug,
-#     #         })
-
-#     def save(self, *args, **kwargs):
-#         if not self.slug:
-#             self.slug = slugify(self.title)
-#         super(Post, self).save(*args, **kwargs)
-
-
-# class Comment(PostCommentAbstract):
-#     class Meta:
-#         verbose_name = _('Commentaire')
-#         verbose_name_plural = _('Commentaires')
-
-#     # Note : author is not in PostCommentAbstract
-#     # because we can't use abstract
-#     # model in serializers...
-#     author = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         verbose_name=_('Auteur'),
-#         blank=False,
-#         null=False,
-#         related_name="comments",
-#         on_delete=models.CASCADE,
-#     )
-#     related_post = models.ForeignKey(
-#         'babyblog.Post',
-#         verbose_name=_('Post relatif'),
-#         blank=False,
-#         null=False,
-#         # related_name="%(class)s_comments",
-#         # on_delete=models.SET_NULL,
-#         # related_name="wall",
-#         )
-
-#     def __unicode__(self):
-#         return _("Commentaire de %(author)s : %(content)s...") % {
-#             'author': self.author, 'content': self.content[:50]}
+        return Post.objects.filter(post=self).order_by('date')
