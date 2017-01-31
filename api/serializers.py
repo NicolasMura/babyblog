@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'profile_avatar_url')
+        fields = ('id', 'username', 'email', 'profile_avatar_url', 'date_joined')
         # Dispo que sur Django >= 10...
         # extra_kwargs = {
         #     'username': {
