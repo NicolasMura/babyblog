@@ -10,7 +10,7 @@ from models import Profile
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', )
     search_fields = ('user', )
-    can_delete = False
+    verbose_name = _('Profil utilisateur')
     verbose_name_plural = _('Profils utilisateurs')
 
 

@@ -26,6 +26,11 @@ urlpatterns = patterns(
         name='post-detail',
     ),
     url(
+        r'^posts/latest$',
+        views.PostLatestDetail.as_view(),
+        name='post-latest-detail',
+    ),
+    url(
         r'^users$',
         views.UserList.as_view(),
         name='user-list',

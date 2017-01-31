@@ -11,3 +11,5 @@ django-suit==0.2.22
 django-bootstrap3>=7.0.1
 psycopg2
 pillow
+pytz==2015.7
+factory_boy

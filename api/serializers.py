@@ -56,7 +56,8 @@ class RecursiveSerializer(serializers.Serializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('content', 'image')
+        fields = ('id', 'user', 'date', 'content',
+                  'parent', 'likes', 'comments', 'image', 'reply_set')
 
 
 class PostListSerializer(serializers.ModelSerializer):

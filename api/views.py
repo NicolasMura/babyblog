@@ -35,6 +35,7 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 #     MultiPartParser, FileUploadParser, JSONParser, FormParser)
 
 from django.contrib.auth.models import User
+from django.http import Http404
 
 
 # REST views
@@ -47,7 +48,9 @@ def api_root(request, format=None):
         'posts': reverse(
             'api:post-list', request=request, format=format),
         'post-create': reverse(
-            'api:post-create', request=request, format=format)
+            'api:post-create', request=request, format=format),
+        'post-latest': reverse(
+            'api:post-latest-detail', request=request, format=format),
     })
 
 
@@ -85,6 +88,14 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     #     permissions.IsAuthenticatedOrReadOnly,
     #     IsOwnerOrReadOnly,
     # )
+
+
+class PostLatestDetail(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get_object(self, *args, **kwargs):
+        return self.queryset.latest('date')
 
 
 class PostCreate(generics.ListCreateAPIView):
