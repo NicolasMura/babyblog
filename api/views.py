@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from babyblog.models import Post
 from serializers import (
-    PostListSerializer,
     PostDetailSerializer,
     PostCreateSerializer,
     PostSerializer,
@@ -16,9 +15,8 @@ from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import status
-# from rest_framework import permissions
+from rest_framework import permissions
 # from snippets.permissions import IsOwnerOrReadOnly, IsAuthenticatedOrCreate
-# from rest_framework import permissions
 
 # Imports for endpoint for the root of our ListAPIView
 from rest_framework.response import Response
@@ -27,7 +25,7 @@ from rest_framework.decorators import list_route
 from rest_framework.reverse import reverse
 
 # Imports for oauth2_provider
-# from oauth2_provider.ext.rest_framework import OAuth2Authentication
+from oauth2_provider.ext.rest_framework import OAuth2Authentication
 
 # Test
 from rest_framework.parsers import MultiPartParser, JSONParser
@@ -54,10 +52,10 @@ def api_root(request, format=None):
     })
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostAPIViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(parent=None).order_by('-date')
 
-    serializer_class = PostListSerializer
+    serializer_class = PostCreateSerializer
 
     @list_route()
     def roots(self, request):
@@ -66,10 +64,10 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class PostList(generics.ListCreateAPIView):
+class PostCreateAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.order_by(('-date'))
-    serializer_class = PostListSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = PostCreateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # authentication_classes = [OAuth2Authentication]
     # permission_classes = [TokenHasScope]
     # parser_classes = (
@@ -81,7 +79,7 @@ class PostList(generics.ListCreateAPIView):
     #     serializer.save(user=self.request.user)
 
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     # permission_classes = (
@@ -90,7 +88,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     # )
 
 
-class PostLatestDetail(generics.RetrieveAPIView):
+class PostLatestDetailAPIView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -98,16 +96,18 @@ class PostLatestDetail(generics.RetrieveAPIView):
         return self.queryset.latest('date')
 
 
-class PostCreate(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostCreateSerializer
+# class PostCreate(generics.ListCreateAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostCreateSerializer
 
 
-class UserList(generics.ListAPIView):
+class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetailAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

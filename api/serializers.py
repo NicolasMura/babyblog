@@ -16,7 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'profile_avatar_url', 'date_joined')
+        fields = ('id', 'username', 'email',
+                  'profile_avatar_url', 'date_joined', 'is_superuser')
         # Dispo que sur Django >= 10...
         # extra_kwargs = {
         #     'username': {
@@ -56,11 +57,11 @@ class RecursiveSerializer(serializers.Serializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'user', 'date', 'content',
+        fields = ('id', 'user', 'date', 'content', 'link',
                   'parent', 'likes', 'comments', 'image', 'reply_set')
 
 
-class PostListSerializer(serializers.ModelSerializer):
+class PostCreateSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     user = UserSerializer()
     reply_set = RecursiveSerializer(many=True, read_only=True)
@@ -70,7 +71,7 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'user', 'date', 'content',
+        fields = ('id', 'user', 'date', 'content', 'link',
                   'parent', 'likes', 'comments', 'image', 'reply_set')
 
     def create(self, validated_data):
@@ -78,6 +79,8 @@ class PostListSerializer(serializers.ModelSerializer):
 
         content = validated_data['content']
         print('content : ', content)
+        link = validated_data['link']
+        print('link : ', link)
         if 'image' in validated_data.keys():
             image = validated_data['image']
         else:
@@ -100,6 +103,7 @@ class PostListSerializer(serializers.ModelSerializer):
         post = Post.objects.create(
             user=user,
             content=content,
+            link=link,
             parent=relatedPostId,
             image=image,
         )
@@ -123,23 +127,3 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     # def get_related_comments(self, obj):
     #     return Post.objects.filter(parent=obj)
-
-
-class PostCreateSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    post = PostSerializer()
-
-    class Meta:
-        fields = ('username', 'post')
-
-    def create(self, validated_data):
-        print(validated_data)
-        tmp_post = validated_data.pop('post')
-        user = User.objects.get(username=validated_data['username'])
-        post = Post.objects.create(
-            user=user,
-            content=tmp_post['content'],
-            image=tmp_post['image'],
-        )
-
-        return post

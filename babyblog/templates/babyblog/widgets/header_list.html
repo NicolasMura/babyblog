@@ -1,7 +1,10 @@
+{% load static %}
+
 <ul class="header-list">
-    <li><a href="#">Retouching</a></li>
+    <!-- <li><a href="#">Retouching</a></li>
     <li class="dot-divider"></li>
     <li><a href="#">News</a></li>
     <li class="dot-divider"></li>
-    <li><a href="#">How-To</a></li>
+    <li><a href="#">How-To</a></li> -->
+    <li><a href="{% url 'babyblog:post' post.pk %}">{{ post.user.username }} - {{ post.date }}</a></li>
 </ul>

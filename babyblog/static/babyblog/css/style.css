@@ -8217,7 +8217,8 @@ html {
   font-weight: 400;
   position: relative;
   min-height: 100%;
-  background-image: url("http://placehold.it/2000x1333");
+  background-image: url("../images/background.jpg");
+  /*background-color: #FF5A5F;*/
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;

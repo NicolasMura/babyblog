@@ -1,31 +1,30 @@
 <div class="box p-50 comments" data-sr='enter from the top and scale up 30% over 0.8s please'>
 
-    <h3 class="block text-center">3 Comments</h3>
+    <h3 class="block text-center">{{ object.get_comments_number }} Commentaires</h3>
 
+    {% if object.get_comments_number > 0 %}
     <ul>
-        
+        {% for comment in object.get_comments %}
         <li>
-
             <div class="flag flag--gutterless">
               <div class="flag__img">
                 <div class="user-img">
-                    <img src="http://placehold.it/50x50" alt="">
+                    <img src="{{ comment.user.profile.avatar.url }}" alt="">
                 </div>
               </div>
               <div class="flag__body">
-                <h4>Milan Tomic</h4>
+                <h4>{{ comment.user.username }}</h4>
                 <ul>
-                    <li><h6>09 Oct 2014</h6></li>
-                    <li><a href="#">Reply</a></li>
+                    <li><h6>{{ comment.date }}</h6></li>
+                    <!-- <li><a href="#">Reply</a></li> -->
                 </ul>
               </div>
             </div>
-
-            <p>Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore.</p>
-            
+            <p>{{ comment.content }}</p>
         </li>
+        {% endfor %}
 
-        <li>
+        <!-- <li>
 
             <div class="flag flag--gutterless">
               <div class="flag__img">
@@ -91,30 +90,36 @@
                 
             </ul>
             
-        </li>
+        </li> -->
 
     </ul>
+    {% endif %}
 
     <div class="clearfix"></div>
 
-    <div class="leave-comments text-center" style="padding: 0px;">
+    <div class="leave-comments text-center" style="padding: 0px; margin-top: 10px;">
         
-        <h3>Leave a Comment</h3>
+        <h3>Laissez-nous un commentaire :)</h3>
 
-        <form>
+        {% if not user.is_authenticated %}
+        <div class="box bgr-red newsletter">
+          <p style="color: white; margin-bottom: 0px;">Vous devez avoir un compte utilisateur pour pouvoir publier un commentaire.</p>
+          <a href="{% url 'zn_auth:login' %}" class="btn btn-medium m-t-0" style="margin-top: 10px!important;">Je me connecte<span class="icon-arrow-right2"></span></a>
+        </div>
+        {% endif %}
+
+        <form action="{% url 'babyblog:post' object.pk %}" method="post" role="form">
+          <fieldset {% if not user.is_authenticated %}disabled{% endif %}>
             <div class="main-form">
                 <div>
-                  <div class="cont1" ><input class="gray" placeholder="Name" type="text">
-                  </div>
-                  <div class="cont1"><input class="gray" placeholder="Email" type="text"></div>
+                  <div class="cont2"><textarea name="content" required></textarea></div>
                 </div>
-                <div>
-                  <div class="cont2"><textarea placeholder="Your Message"></textarea></div>
-                </div>
-                <div class="clearfix"></div> 
+                {% csrf_token %}
+                <div class="clearfix"></div>
             </div>
 
-            <button type="submit" class="btn btn-medium m-t-0">Send Comment<span class="icon-arrow-right2"></span></button>
+            <button type="submit" class="btn btn-medium m-t-0">Envoyer<span class="icon-arrow-right2"></span></button>
+          </fieldset>
         </form>
 
     </div>

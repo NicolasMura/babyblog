@@ -1,15 +1,17 @@
 {% load static %}
+{% load bootstrap3 %}
 <article>
 
     <div class="box p-10 avatar-box">
-        <!-- <a href="#"><img src="{# {% static 'babyblog/images/charlouze.jpg' %} #}" alt=""></a> -->
-        <a href="#"><img src="{{ post.user.profile.avatar.url }}" alt=""></a>
+        <img src="{{ post.user.profile.avatar.url }}" alt="">
+        <!-- <a href="#"><img src="{{ post.user.profile.avatar.url }}" alt=""></a> -->
     </div>
 
     <div class="box p-20 date-box text-center">
-        <a href="#">15</a>
-        <span class="block">OCT</span>
-        <span class="block">2014</span>
+        <!-- <a href="#">{{ post.date|date:"d" }}</a> -->
+        <a href="#">{{ post.date|date:"d" }}</a>
+        <span class="block">{{ post.date|date:"b"|upper }}</span>
+        <span class="block">{{ post.date.year }}</span>
     </div>
     <!-- <div class="box p-20">
         <ul class="social-list">
@@ -35,11 +37,14 @@
 
 <div class="box p-50" >
         
+    {% bootstrap_messages %}
+    {% if post.image %}
     <div class="main-img">
         <img src="{{ post.image.url }}" alt="">
         <!-- <img src="http://placehold.it/670x410" alt=""> -->
         <!-- <img src="{% static 'babyblog/images/blog-img1.jpg' %}" alt=""> -->
     </div>
+    {% endif %}
 
     <div class="text-center box-body"">
         
@@ -49,12 +54,10 @@
         {% endblock header_list %} 
 
         <p class="first-letter text-left" style="margin-bottom: 0px;">
-            <span>L</span>ocavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed       normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. 
-            Locavore pop-up church-key sriracha plaid,
-            <br>
-            <br>
-            Neutra kitsch. Locavore pop-up church-key sriracha plaid, Neutra kitsch. Readymade cold-pressed normcore. Locavore pop-up church-key sriracha plaid, Neutra kitsch.
+            <span>{{ post.get_first_letter }}</span>{{ post.without_first_letter }}
         </p>
+        <br>
+        <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">lien de test</a></div>
 
     </div>
 

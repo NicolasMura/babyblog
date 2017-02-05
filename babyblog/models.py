@@ -60,9 +60,13 @@ class Post(models.Model):
         blank=False,
     )
     date = models.DateTimeField(auto_now_add=True)
-    content = models.TextField(max_length=255, )
+    content = models.TextField(max_length=255)
     parent = models.ForeignKey(
-        'self', related_name='reply_set', null=True, blank=True)
+        'self',
+        related_name='reply_set',
+        null=True,
+        blank=True
+    )
     likes = models.IntegerField(default=0)
     comments = models.IntegerField(default=0)
     image = models.ImageField(
@@ -72,10 +76,24 @@ class Post(models.Model):
         upload_to='upload/images',
         validators=[validate_image],
     )
+    link = models.URLField(
+        max_length=200,
+        blank=True,
+        default="",
+    )
 
     def __unicode__(self):
         return _("Post de %(user)s : %(content)s...") % {
             'user': self.user.username, 'content': self.content[:50]}
 
     def get_comments(self):
-        return Post.objects.filter(post=self).order_by('date')
+        return Post.objects.filter(parent=self).order_by('date')
+
+    def get_comments_number(self):
+        return Post.objects.filter(parent=self).count()
+
+    def get_first_letter(self):
+        return "{}".format(self.content[:1])
+
+    def without_first_letter(self):
+        return "{}".format(self.content[1:])

@@ -10,4 +10,10 @@ urlpatterns = patterns(
         {'template_name': 'zn_auth/login.html'},
         name='login',
     ),
+    url(
+        r'^logout/$',
+        auth_views.logout,
+        {'next_page': '/'},
+        name='generic-logout',
+    ),
 )

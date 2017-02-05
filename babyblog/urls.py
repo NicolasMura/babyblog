@@ -7,8 +7,8 @@ urlpatterns = patterns(
     '',
     url(
         r'^$',
-        # login_required(views.home),
-        login_required(views.HomeView.as_view()),
+        # login_required(views.HomeView.as_view()),
+        views.HomeView.as_view(),
         name='home',
     ),
     url(
@@ -31,4 +31,9 @@ urlpatterns = patterns(
         views.SingleBlogVideo.as_view(),
         name='post-video',
     ),
+    # url(
+    #     r'^submit-comment$',
+    #     views.submit_comment,
+    #     name='submit-comment',
+    # )
 )

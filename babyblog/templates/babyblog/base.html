@@ -8,6 +8,7 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <link rel="stylesheet" href="{% static 'babyblog/css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'babyblog/css/custom.css' %}">
       <script src="{% static 'babyblog/js/modernizr-2.7.1.min.js' %}"></script>
       <link rel="icon" type="image/png" href="favicon.png" />  
       <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600' rel='stylesheet' type='text/css'> 
@@ -29,15 +30,30 @@
             <div class="container">
 
                 <ul class="pull-right nav-list">
-                    <li>
+                    <!-- <li>
                         <a href="javascript:void(0)" id="open-nav"><span class="icon-list"></span></a>
+                    </li> -->
+                    {% if not user.is_authenticated %}
+                    <li>
+                        Connexion
+                    </li>
+                    <li>    
+                        <a href="{% url 'zn_auth:login' %}" title="Se connecter"><span class="fa fa-sign-in"></span></a>
+                    </li>
+                    {% else %}
+                    <li>
+                        Bienvenue, {{ user.username }}
                     </li>
                     <li>
+                        <a href="{% url 'zn_auth:generic-logout' %}" title="Se déconnecter"><span class="fa fa-sign-out"></span></a>
+                    </li>
+                    {% endif %}
+                    <!-- <li>
                         <a href="javascript:void(0)" id="open-contact"><span class="icon-mail"></span></a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a href="javascript:void(0)" id="open-sidebar"><span class="fa fa-th-large"></span></a>
-                    </li>
+                    </li> -->
                 </ul>
                 <a href="{% url 'babyblog:home' %}" class="inline middle logo"><img src="{% static 'babyblog/images/logo.png' %}" alt=""></a>
 
@@ -46,18 +62,18 @@
                         <li>
                             <a href="{% url 'babyblog:home' %}">Home</a> 
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{% url 'babyblog:home2' %}">Home 2</a> 
-                        </li>
+                        </li> -->
                         <!-- <li>
                             <a href="{# {% url 'babyblog:post' %} #}">Post</a>
                         </li> -->
-                        <li>
+                        <!-- <li>
                             <a href="{% url 'babyblog:post-slider' %}">Post Slider</a>
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                             <a href="{% url 'babyblog:post-video' %}">Post Video</a>
-                        </li>
+                        </li> -->
                         <!-- <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-trigger">Portfolio</a>
                             <ul class="dropdown-list">
@@ -223,7 +239,7 @@
         <footer class="footer-main center">
             <div class="container">
     
-                <ul class="footer-social pull-right">
+                <!-- <ul class="footer-social pull-right">
 
                     <li>
                         <a href="#"><span class="icon-facebook"></span></a>
@@ -244,7 +260,7 @@
                         <a href="#"><span class="icon-rss"></span></a>
                     </li>
                     
-                </ul>
+                </ul> -->
                 <small><strong>Copyright © 2016. mylittlebaby.blog.</strong></small>
 
             </div>

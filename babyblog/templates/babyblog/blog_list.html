@@ -3,7 +3,7 @@
 
 
 {% block page_title %}
-    {% include 'babyblog/widgets/page_title.html' with title='Home' subtitle='Subtitle' %}
+    {% include 'babyblog/widgets/page_title.html' with title='Babyblog' subtitle='The wall' %}
 {% endblock page_title %}
 
 {% block main_content %}
@@ -21,7 +21,7 @@
                     <div class="flag__img">
                         <div class="img-box">
                             <div class="box-hover">
-                                <a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium ">View Details <span class="icon-arrow-right2"></span></a>
+                                <a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium ">En détail <span class="icon-arrow-right2"></span></a>
                             </div>
                             <img src="{{ post.image.url }}" alt="">
                         </div>
@@ -32,12 +32,16 @@
 
                         <div class="box-body">
                             
-                            <h2 class="heading--alpha"><a href="#">{{ post.title }}</a> </h2>
+                            <!-- <h2 class="heading--alpha"><a href="#">{{ post.title }}</a> </h2> -->
                             {% block header_list %}
-                                {# {% include 'babyblog/widgets/header_list.html' %} #}
+                                {% include 'babyblog/widgets/header_list.html' with post=post %}
                             {% endblock header_list %} 
 
                             <p>{{ post.content }}</p>
+                            <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">lien de test</a></div>
+                            {% if not post.image %}
+                                <p><a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium m-t-0" style="margin-top: 10px!important;">En détail<span class="icon-arrow-right2"></span></a></p>
+                            {% endif %}
 
                             <!-- <ul class="social-list">
                                 <li>
@@ -64,12 +68,11 @@
                     
                 </div>
             {% endfor %}
-            {% include 'babyblog/widgets/load_more.html' %}
+            {# {% include 'babyblog/widgets/load_more.html' %} #}
         </div>
 
         <div class="col-sm-4 sidebar">
-            {% include 'babyblog/widgets/box_text.html' %}
-            {% include 'babyblog/widgets/box_image.html' %}
+            {% include 'babyblog/widgets/boxes.html' with user_list=user_list %}
         </div>
 
     </div>

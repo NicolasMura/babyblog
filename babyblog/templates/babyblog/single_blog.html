@@ -8,12 +8,11 @@
 
         <div class="col-sm-8">
             {% include 'babyblog/widgets/single_blog_item.html' with post=object %}
-            {% include 'babyblog/widgets/single_blog_comments.html' %}
+            {% include 'babyblog/widgets/single_blog_comments.html' with post=object %}
         </div>
 
         <div class="col-sm-4 sidebar">
-            {% include 'babyblog/widgets/box_text.html' %}
-            {% include 'babyblog/widgets/box_image.html' %}
+            {% include 'babyblog/widgets/boxes.html' with user_list=user_list %}
         </div>
 
     </div>

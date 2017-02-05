@@ -53,15 +53,15 @@ OAUTH2_PROVIDER = {
 REST_FRAMEWORK = {
     # django-oauth-toolkit permissions
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.authentication.BasicAuthentication',
-        # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        # 'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.authentication.BasicAuthentication',
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FileUploadParser',
-        'rest_framework.parsers.FormParser',
+        # 'rest_framework.parsers.MultiPartParser',
+        # 'rest_framework.parsers.FileUploadParser',
+        # 'rest_framework.parsers.FormParser',
     ),
     'PAGE_SIZE': 10,
 }
@@ -106,17 +106,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webApp.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -153,6 +142,8 @@ if HOST != 'vps121400.ovh.net':
     DEBUG = True
     TEMPLATES[0]['OPTIONS']['debug'] = True,
     SECRET_KEY = 'development_settings_secret_key'
+    # Database
+    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

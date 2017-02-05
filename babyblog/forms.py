@@ -9,4 +9,10 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['author', 'slug']
+        fields = ['user', 'content']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['user', 'content', 'parent']
