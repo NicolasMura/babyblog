@@ -79,7 +79,10 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
         content = validated_data['content']
         print('content : ', content)
-        link = validated_data['link']
+        if 'link' in validated_data.keys():
+            link = validated_data['link']
+        else:
+            link = ''
         print('link : ', link)
         if 'image' in validated_data.keys():
             image = validated_data['image']
