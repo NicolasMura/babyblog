@@ -57,7 +57,9 @@
             <span>{{ post.get_first_letter }}</span>{{ post.without_first_letter }}
         </p>
         <br>
-        <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">lien de test</a></div>
+        {% if post.link %}
+            <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata</a></div>
+        {% endif %}
 
     </div>
 

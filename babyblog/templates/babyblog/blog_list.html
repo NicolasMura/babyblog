@@ -38,7 +38,9 @@
                             {% endblock header_list %} 
 
                             <p>{{ post.content }}</p>
-                            <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">lien de test</a></div>
+                            {% if post.link %}
+                                <a href="#" style="border-bottom: 1px solid #898989;">https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata</a>
+                            {% endif %}
                             {% if not post.image %}
                                 <p><a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium m-t-0" style="margin-top: 10px!important;">En détail<span class="icon-arrow-right2"></span></a></p>
                             {% endif %}

@@ -1,6 +1,8 @@
 <div class="box p-50 comments" data-sr='enter from the top and scale up 30% over 0.8s please'>
 
-    <h3 class="block text-center">{{ object.get_comments_number }} Commentaires</h3>
+    {% if object.get_comments_number > 0 %}
+      <h3 class="block text-center">{{ object.get_comments_number }} Commentaire{% if object.get_comments_number > 1 %}s{% endif %}</h3>
+    {% endif %}
 
     {% if object.get_comments_number > 0 %}
     <ul>

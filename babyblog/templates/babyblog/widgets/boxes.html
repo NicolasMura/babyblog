@@ -11,10 +11,10 @@
     <br>
     <div class="instagram-img">
         <ul>
-            <li>
+            <li style="padding-right: 5px;">
                 <a href="https://play.google.com/store/apps/details?id=nicolasmura.fr" target="_blank"><img src="{% static 'babyblog/images/google-play.png' %}"></a>
             </li>
-            <li>
+            <li style="padding-left: 5px;">
                 <a href="https://itunes.apple.com/us/app/babyblog/id1200927529?l=fr&ls=1&mt=8" target="_blank"><img src="{% static 'babyblog/images/apple-store.png' %}"></a>
             </li>
         </ul>
@@ -27,7 +27,7 @@
 </div>
 
 <div class="box" data-sr='enter from the top and scale up 30% over 0.8s please'>
-    <h5><strong>Nos super-héros</strong></h5>
+    <h5><strong>Les super-héros de ce blog</strong></h5>
     <div class="instagram-img">
         <ul>
             {% for user in user_list %}
