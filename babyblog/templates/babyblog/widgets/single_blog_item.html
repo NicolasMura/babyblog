@@ -58,7 +58,9 @@
         </p>
         <br>
         {% if post.link %}
-            <div class="text-left"><a href="#" style="border-bottom: 1px solid #898989;">https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata</a></div>
+            <div class="text-left" style="overflow-wrap: break-word;">
+                <a href="{{ post.link }}" target="_blank" style="border-bottom: 1px solid #898989;">{{ post.link }}</a>
+            </div>
         {% endif %}
 
     </div>

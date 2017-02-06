@@ -17,55 +17,59 @@
 
                     <div class="flag flag--gutterless">
 
-                    {% if post.image %}
-                    <div class="flag__img">
-                        <div class="img-box">
-                            <div class="box-hover">
-                                <a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium ">En détail <span class="icon-arrow-right2"></span></a>
+                        {% if post.image %}
+                        <div class="flag__img">
+                            <div class="img-box">
+                                <div class="box-hover">
+                                    <a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium ">En détail <span class="icon-arrow-right2"></span></a>
+                                </div>
+                                <img src="{{ post.image.url }}" alt="">
                             </div>
-                            <img src="{{ post.image.url }}" alt="">
-                        </div>
-
-                    </div>
-                    {% endif %}
-                    <div class="flag__body text-center">
-
-                        <div class="box-body">
-                            
-                            <!-- <h2 class="heading--alpha"><a href="#">{{ post.title }}</a> </h2> -->
-                            {% block header_list %}
-                                {% include 'babyblog/widgets/header_list.html' with post=post %}
-                            {% endblock header_list %} 
-
-                            <p>{{ post.content }}</p>
-                            {% if post.link %}
-                                <a href="#" style="border-bottom: 1px solid #898989;">https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata</a>
-                            {% endif %}
-                            {% if not post.image %}
-                                <p><a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium m-t-0" style="margin-top: 10px!important;">En détail<span class="icon-arrow-right2"></span></a></p>
-                            {% endif %}
-
-                            <!-- <ul class="social-list">
-                                <li>
-                                    <a href="#"><span class="icon-facebook"></span></a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="icon-twitter"></span></a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="icon-pinterest"></span></a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="icon-googleplus"></span></a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="fa fa-linkedin"></span></a>
-                                </li>
-                            </ul> -->
 
                         </div>
+                        {% endif %}
                         
-                      </div>
+                        <div class="flag__body text-center">
+
+                            <div class="box-body">
+                                
+                                <!-- <h2 class="heading--alpha"><a href="#">{{ post.title }}</a> </h2> -->
+                                {% block header_list %}
+                                    {% include 'babyblog/widgets/header_list.html' with post=post %}
+                                {% endblock header_list %} 
+
+                                <p>{{ post.content }}</p>
+
+                                {% if post.link %}
+                                    <div class="text-left {% if post.image %}link-with-image{% endif %}">
+                                        <a href="{{ post.link }}" target="_blank" style="border-bottom: 1px solid #898989;">{{ post.link }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if not post.image %}
+                                    <p><a href="{% url 'babyblog:post' post.pk %}" class="btn btn-medium m-t-0" style="margin-top: 10px!important;">En détail<span class="icon-arrow-right2"></span></a></p>
+                                {% endif %}
+
+                                <!-- <ul class="social-list">
+                                    <li>
+                                        <a href="#"><span class="icon-facebook"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="icon-twitter"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="icon-pinterest"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="icon-googleplus"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="fa fa-linkedin"></span></a>
+                                    </li>
+                                </ul> -->
+
+                            </div>
+                            
+                        </div>
                     </div>
                     
                 </div>
@@ -81,3 +85,15 @@
 
 </section>
 {% endblock main_content %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        // Workaround pour les liens (cause affichage en mode 'table' du template...)
+        var width_container = $('.box-flag').width();
+        console.log(width_container);
+        var width_img = $('.flag__img').width();
+        console.log(width_img);
+        var width = width_container - width_img;
+        $('.link-with-image').attr('style', 'overflow-wrap: break-word; max-width:' + width + 'px;');
+    </script>
+{% endblock javascript %}
