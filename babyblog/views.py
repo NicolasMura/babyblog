@@ -136,6 +136,7 @@ class SingleBlog(DetailView):
             messages.SUCCESS,
             _('Merci pour votre commentaire !')
         )
+        self.context.update({'user_list': User.objects.all()})
         return render(request, self.template_name, self.context)
 
 
