@@ -82,10 +82,12 @@ class PostCreateAPIView(generics.ListCreateAPIView):
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # permission_classes = (
     #     permissions.IsAuthenticatedOrReadOnly,
     #     IsOwnerOrReadOnly,
     # )
+    # parser_classes = (MultiPartParser, JSONParser)
 
 
 class PostLatestDetailAPIView(generics.RetrieveAPIView):
