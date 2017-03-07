@@ -115,7 +115,10 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    # user = UserSerializer(many=False)
+    id = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    user = UserSerializer()
+    reply_set = RecursiveSerializer(many=True, read_only=True)
     # parent = serializers.StringRelatedField(many=False)
     # reply_set = RecursiveField(many=True)  # marche pas
     # related_comments = serializers.SerializerMethodField()
@@ -125,8 +128,10 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('user', 'date', 'content',
-                  'likes', 'comments', 'image')
+        # fields = ('user', 'date', 'content',
+        #           'likes', 'comments', 'image')
+        fields = ('id', 'user', 'date', 'content', 'link',
+                  'parent', 'likes', 'comments', 'reply_set')
 
     # def get_related_comments(self, obj):
     #     return Post.objects.filter(parent=obj)
