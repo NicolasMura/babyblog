@@ -122,16 +122,16 @@ class PostDetailSerializer(serializers.ModelSerializer):
     # parent = serializers.StringRelatedField(many=False)
     # reply_set = RecursiveField(many=True)  # marche pas
     # related_comments = serializers.SerializerMethodField()
-    # image = Base64ImageField(
-    #     max_length=None, use_url=True,
-    #     allow_empty_file=True, required=False, )
+    image = Base64ImageField(
+        max_length=None, use_url=True,
+        allow_empty_file=True, required=False, )
 
     class Meta:
         model = Post
         # fields = ('user', 'date', 'content',
         #           'likes', 'comments', 'image')
         fields = ('id', 'user', 'date', 'content', 'link',
-                  'parent', 'likes', 'comments', 'reply_set')
+                  'parent', 'likes', 'comments', 'image', 'reply_set')
 
     # def get_related_comments(self, obj):
     #     return Post.objects.filter(parent=obj)
