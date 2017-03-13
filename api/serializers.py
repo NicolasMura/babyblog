@@ -72,7 +72,8 @@ class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user', 'date', 'content', 'link',
-                  'parent', 'likes', 'comments', 'image', 'reply_set')
+                  'parent', 'likes', 'comments', 'image', 'videoUrl',
+                  'reply_set')
 
     def create(self, validated_data):
         print('validated_data : ', validated_data)
@@ -89,6 +90,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
         else:
             image = None
         print('image : ', image)
+        videoUrl = validated_data['videoUrl']
 
         if 'parent' in validated_data.keys():
             relatedPostId = validated_data['parent']
@@ -109,6 +111,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
             link=link,
             parent=relatedPostId,
             image=image,
+            videoUrl=videoUrl,
         )
 
         return post

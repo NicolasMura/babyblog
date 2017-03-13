@@ -81,6 +81,11 @@ class Post(models.Model):
         blank=True,
         default="",
     )
+    videoUrl = models.URLField(
+        max_length=200,
+        blank=True,
+        default="",
+    )
 
     def __unicode__(self):
         return _("Post de %(user)s : %(content)s...") % {

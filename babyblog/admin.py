@@ -17,7 +17,8 @@ class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _('Contenu'),
-            {'fields': ('user', 'parent', 'content', 'link', 'image')}
+            {'fields': ('user', 'parent', 'content',
+                        'link', 'image', 'videoUrl')}
         ),
         # (
         #     _('Metadata'),
