@@ -58,7 +58,8 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user', 'date', 'content', 'link',
-                  'parent', 'likes', 'comments', 'image', 'reply_set')
+                  'parent', 'likes', 'comments', 'image', 'videoUrl',
+                  'reply_set')
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
@@ -134,7 +135,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
         # fields = ('user', 'date', 'content',
         #           'likes', 'comments', 'image')
         fields = ('id', 'user', 'date', 'content', 'link',
-                  'parent', 'likes', 'comments', 'image', 'reply_set')
+                  'parent', 'likes', 'comments', 'image', 'videoUrl',
+                  'reply_set')
 
     # def get_related_comments(self, obj):
     #     return Post.objects.filter(parent=obj)
