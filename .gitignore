@@ -101,5 +101,6 @@ gunicorn/
 nginx/
 supervisor/
 production.py
+production-demo.py
 /static
 .sass-cache
