@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 # from .user import UserFactory
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
+from .mixins import make_sure_path_exists
 from zn_auth.models import Profile
 from babyblog.models import Post
 from .post import PostFactory
@@ -46,8 +48,9 @@ def create_user(user_count):
     new_user = UserFactory.create()
     new_profile = Profile.objects.get(user=new_user)
     # Get image from lorempixel.com and save it to upload folder
+    make_sure_path_exists('media/upload/avatars')
     urllib.urlretrieve(
-        'http://lorempixel.com/50/50/',
+        'http://lorempixel.com/512/512/',
         'media/upload/avatars/fake-avatar-' + str(new_profile.id) + '.jpg')
     # Set saved avatar for new profile
     new_profile.avatar = 'upload/avatars/fake-avatar-' + str(

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 import factory
 from django.utils.timezone import get_current_timezone
+import os
+import errno
 
 
 def make_auto_now_date_factory_mixin(
@@ -32,3 +34,11 @@ def make_auto_now_date_factory_mixin(
             return self
 
     return AutoNowDateFactoryMixin
+
+
+def make_sure_path_exists(path):
+    try:
+        os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise

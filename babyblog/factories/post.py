@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from .mixins import make_auto_now_date_factory_mixin
+from .mixins import make_auto_now_date_factory_mixin, make_sure_path_exists
 from .user import UserFactory
 from babyblog.models import Post
 import factory
@@ -50,6 +50,7 @@ class PostFactory(
         random_width = PHOTO_FORMATS[random_int][1]['width']
         random_height = PHOTO_FORMATS[random_int][1]['height']
         # Get image from lorempixel.com and save it to upload folder
+        make_sure_path_exists('media/upload/images')
         urllib.urlretrieve(
             'http://lorempixel.com/' + str(
                 random_width) + '/' + str(
